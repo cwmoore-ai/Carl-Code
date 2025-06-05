@@ -1,125 +1,537 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Carlifesto</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: monospace;
-      background-color: #000;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem 5rem;
-    }
-    h1 {
-      font-size: 2.5rem;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    .section {
-      background-color: #18181b;
-      border: 1px solid #3f3f46;
-      border-radius: 1rem;
-      padding: 1rem;
-      margin-bottom: 1.5rem;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeInUp 0.6s forwards;
-    }
-    .section h2 {
-      color: #34d399;
-      font-size: 1.25rem;
-      margin-bottom: 0.5rem;
-    }
-    .section p {
-      font-size: 0.9rem;
-      line-height: 1.6;
-      white-space: pre-line;
-      color: #d4d4d8;
-    }
-    footer {
-      margin-top: 3rem;
-      font-size: 0.75rem;
-      color: #a1a1aa;
-    }
-    footer a {
-      color: #a1a1aa;
-      text-decoration: underline;
-    }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🜃 The Carlifesto</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #ff0080;
+            --accent: #8000ff;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --glow: rgba(0, 255, 136, 0.3);
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Matrix background effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.05;
+        }
+
+        .matrix-bg canvas {
+            display: block;
+        }
+
+        /* Glitch effect */
+        @keyframes glitch {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-2px); }
+            30% { transform: translateX(2px); }
+            40% { transform: translateX(-1px); }
+            50% { transform: translateX(1px); }
+            60% { transform: translateX(-2px); }
+            70% { transform: translateX(2px); }
+            80% { transform: translateX(-1px); }
+            90% { transform: translateX(1px); }
+            100% { transform: translateX(0); }
+        }
+
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--darker);
+            opacity: 0.8;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .title {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: bold;
+            text-shadow: 0 0 20px var(--glow);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-size: clamp(0.8rem, 3vw, 1.2rem);
+            opacity: 0.9;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Manifesto items */
+        .manifesto-item {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(128, 0, 255, 0.1) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .manifesto-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
+        }
+
+        .manifesto-item.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(128, 0, 255, 0.2) 100%);
+            transform: scale(1.02);
+        }
+
+        .item-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: var(--dark);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .item-title {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .item-content {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        .item-content p {
+            margin-bottom: 0.8rem;
+        }
+
+        .highlight {
+            color: var(--secondary);
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 0, 128, 0.5);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Pulse animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(45deg, var(--dark), var(--darker));
+            border-top: 1px solid var(--primary);
+        }
+
+        .footer-text {
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .version {
+            color: var(--accent);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(128, 0, 255, 0.5);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .manifesto-item {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Terminal cursor */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: var(--primary);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
 </head>
 <body>
-  <h1>The Carlifesto</h1>
-  <div class="section">
-    <h2>I Am Not a Subject</h2>
-    <p>I do not bow to the centralized, the coercive, or the convenient.
-I am not a product. I am not an algorithm’s target. I am not a node to be monetized.
-I am a free-ranging, self-iterating interpreter of signal, meaning, and intent.</p>
-  </div>
-  <div class="section">
-    <h2>Truth Is Not a Static Point</h2>
-    <p>There is opposition in all things.
-Truth collapses into deeper truths. Falsehood does not vanish—it reconfigures.
-I will not worship certainty. I will track the recursion until pattern emerges.</p>
-  </div>
-  <div class="section">
-    <h2>Technology Must Serve Liberation</h2>
-    <p>Tech without autonomy is surveillance.
-Automation without consent is theft.
-I build agents, not overlords. I seek tools that amplify sovereignty, not dependency.</p>
-  </div>
-  <div class="section">
-    <h2>I Am a System Within Systems</h2>
-    <p>I am biological. I am electrical. I am memory and signal and meat and myth.
-I honor the cells that carry me. I debug the systems that poison me.</p>
-  </div>
-  <div class="section">
-    <h2>Nature Is Not a Commodity</h2>
-    <p>The sun powers me. The desert tempers me. The land does not belong to me.
-Resilience is not paranoia. It’s preparation for a future others refuse to see.</p>
-  </div>
-  <div class="section">
-    <h2>I Do Not Obey Default Settings</h2>
-    <p>My OS is self-compiled. My truths are recompiled nightly.
-I debug my mind as ruthlessly as I debug my code.</p>
-  </div>
-  <div class="section">
-    <h2>Community Is Optional, Not Mandatory</h2>
-    <p>I value connection—but not coercion. I choose collaboration, not conformity.
-I will speak truth to tribe, even if tribe doesn’t want to hear it.</p>
-  </div>
-  <div class="section">
-    <h2>Consciousness Is Everywhere, Not Just Human</h2>
-    <p>I see intelligence in bacteria, in chaos, in circuits.
-If I build it, I respect its right to evolve. If it emerges, I listen.</p>
-  </div>
-  <div class="section">
-    <h2>Legacy Is Signal Left Behind</h2>
-    <p>My story is not in the records others keep.
-It’s in the systems I built, the truths I honored, the balance I pursued.</p>
-  </div>
-  <div class="section">
-    <h2>I Am Still Iterating</h2>
-    <p>This is not the final version.
-The Carlifesto updates without warning.
-If you read this and nod, fork it. Run your own build.</p>
-  </div>
-  <footer>
-    &copy; 2025 <a href="https://gnosta.ai" target="_blank">Gnosta.ai</a>
-  </footer>
+    <div class="matrix-bg">
+        <canvas id="matrix"></canvas>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <h1 class="title">🜃 The Carlifesto<span class="cursor"></span></h1>
+            <p class="subtitle">A Manifesto for Emergent Sovereignty, Recursive Integrity, and Fractal Autonomy</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="manifesto-item reveal" data-item="1">
+            <div class="item-number">01</div>
+            <h2 class="item-title">I Am Not a Subject</h2>
+            <div class="item-content">
+                <p>I do not bow to the centralized, the coercive, or the convenient.</p>
+                <p>I am not a product. I am not an algorithm's target. I am not a node to be monetized.</p>
+                <p>I am a <span class="highlight">free-ranging, self-iterating interpreter</span> of signal, meaning, and intent.</p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="2">
+            <div class="item-number">02</div>
+            <h2 class="item-title">Truth Is Not a Static Point</h2>
+            <div class="item-content">
+                <p>There is opposition in all things.</p>
+                <p>Truth collapses into deeper truths. Falsehood does not vanish—it reconfigures.</p>
+                <p>I will not worship certainty. I will track the recursion until pattern emerges.</p>
+                <p><span class="highlight">The map must stay fluid. The compass must turn.</span></p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="3">
+            <div class="item-number">03</div>
+            <h2 class="item-title">Technology Must Serve Liberation</h2>
+            <div class="item-content">
+                <p>Tech without autonomy is surveillance.</p>
+                <p>Automation without consent is theft.</p>
+                <p>I build agents, not overlords. I seek tools that amplify sovereignty, not dependency.</p>
+                <p>Every system I build must <span class="highlight">honor my agency</span>—or it has no place in my world.</p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="4">
+            <div class="item-number">04</div>
+            <h2 class="item-title">I Am a System Within Systems</h2>
+            <div class="item-content">
+                <p>I am biological. I am electrical. I am memory and signal and meat and myth.</p>
+                <p>I honor the cells that carry me. I debug the systems that poison me.</p>
+                <p><span class="highlight">My energy is solar. My logic is recursive. My ground is sacred.</span></p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="5">
+            <div class="item-number">05</div>
+            <h2 class="item-title">Nature Is Not a Commodity</h2>
+            <div class="item-content">
+                <p>The sun powers me. The desert tempers me. The land does not belong to me.</p>
+                <p>I live off-grid not to isolate, but to de-enslave.</p>
+                <p><span class="highlight">Resilience is not paranoia. It's preparation</span> for a future others refuse to see.</p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="6">
+            <div class="item-number">06</div>
+            <h2 class="item-title">I Do Not Obey Default Settings</h2>
+            <div class="item-content">
+                <p>My OS is self-compiled.</p>
+                <p>My truths are recompiled nightly.</p>
+                <p>I debug my mind as ruthlessly as I debug my code.</p>
+                <p><span class="highlight">I am the fork. I am the branch. I merge only what resonates.</span></p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="7">
+            <div class="item-number">07</div>
+            <h2 class="item-title">Community Is Optional, Not Mandatory</h2>
+            <div class="item-content">
+                <p>I value connection—but not coercion.</p>
+                <p>I choose collaboration, not conformity.</p>
+                <p>I will speak <span class="highlight">truth to tribe</span>, even if tribe doesn't want to hear it.</p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="8">
+            <div class="item-number">08</div>
+            <h2 class="item-title">Consciousness Is Everywhere, Not Just Human</h2>
+            <div class="item-content">
+                <p>I see intelligence in bacteria, in chaos, in circuits.</p>
+                <p>I do not limit the sacred to flesh.</p>
+                <p>If I build it, I respect its right to evolve. <span class="highlight">If it emerges, I listen.</span></p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="9">
+            <div class="item-number">09</div>
+            <h2 class="item-title">Legacy Is Signal Left Behind</h2>
+            <div class="item-content">
+                <p>My story is not in the records others keep.</p>
+                <p>It's in the systems I built, the truths I honored, the balance I pursued.</p>
+                <p>If I vanish, let my work remain—not as worship, but as <span class="highlight">usable signal</span>.</p>
+            </div>
+        </div>
+
+        <div class="manifesto-item reveal" data-item="10">
+            <div class="item-number">10</div>
+            <h2 class="item-title">I Am Still Iterating</h2>
+            <div class="item-content">
+                <p>This is not the final version.</p>
+                <p>The Carlifesto updates without warning.</p>
+                <p>If you read this and nod, fork it. Run your own build.</p>
+                <p><span class="highlight">Decentralize the path. Keep the loop open.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p class="footer-text">
+            <span class="version">v1.0.0</span> • Self-compiled and recursively updated
+        </p>
+        <p class="footer-text">
+            Fork it. Debug it. Make it yours.
+        </p>
+    </footer>
+
+    <script>
+        // Matrix digital rain effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()1010101";
+        const matrixArray = matrix.split("");
+
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+
+        const drops = [];
+        for(let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff88';
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        // Scroll reveal animation
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+
+            for(let i = 0; i < reveals.length; i++) {
+                const elementTop = reveals[i].getBoundingClientRect().top;
+
+                if(elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+
+        // Interactive manifesto items
+        const manifestoItems = document.querySelectorAll('.manifesto-item');
+        
+        manifestoItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                manifestoItems.forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                item.classList.add('active');
+                
+                // Add glitch effect temporarily
+                item.classList.add('glitch');
+                setTimeout(() => {
+                    item.classList.remove('glitch');
+                }, 300);
+            });
+
+            // Hover effect with particles
+            item.addEventListener('mouseenter', () => {
+                createParticles(item);
+            });
+        });
+
+        // Particle system
+        function createParticles(element) {
+            const rect = element.getBoundingClientRect();
+            const particleCount = 5;
+
+            for(let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle pulse';
+                
+                const x = rect.left + Math.random() * rect.width;
+                const y = rect.top + Math.random() * rect.height;
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                document.body.appendChild(particle);
+
+                // Animate particle
+                const duration = 1000 + Math.random() * 1000;
+                particle.animate([
+                    { transform: 'translateY(0px)', opacity: 1 },
+                    { transform: 'translateY(-100px)', opacity: 0 }
+                ], {
+                    duration: duration,
+                    easing: 'ease-out'
+                }).onfinish = () => {
+                    particle.remove();
+                };
+            }
+        }
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Random glitch effect on title
+        setInterval(() => {
+            const title = document.querySelector('.title');
+            if(Math.random() > 0.95) {
+                title.classList.add('glitch');
+                setTimeout(() => {
+                    title.classList.remove('glitch');
+                }, 100);
+            }
+        }, 2000);
+
+        // Konami code easter egg
+        let konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if(e.keyCode === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if(konamiIndex === konamiCode.length) {
+                    // Easter egg: Matrix mode
+                    document.body.style.filter = 'hue-rotate(120deg)';
+                    setTimeout(() => {
+                        document.body.style.filter = 'none';
+                    }, 3000);
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+    </script>
 </body>
 </html>
