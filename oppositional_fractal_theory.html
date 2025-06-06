@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Oppositional Fractal Theory: A Model for Recursive Truth Collapse</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #fdfdfd;
+      --text: #222;
+      --accent: #345972;
+      --sub: #666;
+      --code-bg: #f5f5f5;
+    }
+    body {
+      margin: 0;
+      padding: 2rem 1rem;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      background: var(--bg);
+      color: var(--text);
+    }
+    main {
+      max-width: 850px;
+      margin: auto;
+    }
+    h1, h2, h3, h4 {
+      color: var(--accent);
+      line-height: 1.25;
+      margin-top: 1.6rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      text-align: center;
+      margin-bottom: 0.4rem;
+    }
+    h1 small {
+      font-size: 1.2rem;
+      display: block;
+      margin-top: 0.3rem;
+    }
+    h2 { font-size: 1.55rem; }
+    h3 { font-size: 1.25rem; }
+    header { text-align: center; margin-bottom: 2.2rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1rem 0;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+    ul { margin: 0 0 1rem 1.4rem; }
+    pre, code {
+      background: var(--code-bg);
+      padding: 0.2rem 0.4rem;
+      border-radius: 4px;
+    }
+    footer {
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: var(--sub);
+      text-align: center;
+    }
+  </style>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Oppositional Fractal Theory <small>A Model for Recursive Truth Collapse</small></h1>
+      <p><strong>Carl Moore</strong><br>Independent Synthetic Cognition Researcher | <a href="https://gnosta.ai" target="_blank">Gnosta.ai</a><br><em>Draft: 5&nbsp;June&nbsp;2025</em></p>
+    </header>
+
+    <section>
+      <h2>Abstract</h2>
+      <p>Oppositional Fractal Theory (OFT) formalises the intuition that <em>truth and falsehood are never wholly discrete</em>; each, at every scale, contains the other as an intrinsic “seed.” Drawing on dialectics, deconstruction, dialetheism, fuzzy logic and fractal epistemology, OFT models this entanglement with a simple geometric recurrence:</p>
+      <p>\[\mathrm{trth}_{n+1}=\frac{\mathrm{trth}_n}{2},\qquad \mathrm{fals}_{n+1}=\mathrm{fals}_n+\frac{\mathrm{trth}_n}{2}.\]</p>
+      <p>This yields the closed forms</p>
+      <p>\[\mathrm{trth}_n = \bigl(\tfrac12\bigr)^n,\qquad \mathrm{fals}_n = 1-\bigl(\tfrac12\bigr)^n.\]</p>
+      <p><strong>Recursive certainty collapse</strong> follows: as \(n\to\infty\), \(\mathrm{trth}_n\to0\) while \(\mathrm{fals}_n\to1\), so absolute purity dissolves into its opposite. The paper positions OFT as a <em>meta‑theoretical lens</em>—clarifying the structural limits of certainty rather than adjudicating particular propositions—and shows its compatibility with, yet irreducibility to, multi‑valued logical systems.</p>
+    </section>
+
+    <section>
+      <h2>1&nbsp;&nbsp;Introduction — Opposition Everywhere, Purity Nowhere</h2>
+      <p>Philosophers from <strong>Heraclitus</strong> (“strife is justice”) through <strong>Hegelian dialectics</strong>, the <strong>Madhyamaka</strong> two‑truths doctrine, and <strong>Derrida’s</strong> deconstruction all note that any apparent whole conceals its negation. What has been missing is a <em>minimal quantitative model</em> that exhibits this opposition mechanically. OFT supplies that model, revealing how every declaration of complete truth recursively fractures into a self‑similar mix of truth and falsehood.</p>
+      <p>OFT is <strong>not</strong></p>
+      <ul>
+        <li>an optimisation algorithm (cf. “oppositional stochastic fractal search”),</li>
+        <li>a sociological diagnosis of “post‑truth,” or</li>
+        <li>a tool for fact‑checking.</li>
+      </ul>
+      <p>Instead it illuminates why <strong>pure certainty cannot survive infinite conceptual scrutiny</strong>.</p>
+    </section>
+
+    <section>
+      <h2>2&nbsp;&nbsp;Why Opposition Inhabits Truth</h2>
+      <ul>
+        <li><strong>Definitional Boundaries</strong> Naming <em>A</em> true simultaneously posits <em>¬A</em>, the contextual outside that limits A. Hence every assertion embeds its negation.</li>
+        <li><strong>Perpetual Dialectic Without Synthesis</strong> Classical dialectic heads toward synthesis; OFT keeps splitting, preventing closure.</li>
+        <li><strong>Abstraction &amp; Exclusion</strong> Isolating a “whole truth” abstracts from total reality, leaving out perspectives that re‑enter as latent falsehood.</li>
+      </ul>
+      <p>This motivates the <em>axiom of reciprocal seeding</em>:</p>
+      <blockquote>At every level, truth contains an irreducible seed of falsehood, and vice versa.</blockquote>
+    </section>
+
+    <section>
+      <h2>3&nbsp;&nbsp;Formal Model: Recursive Certainty Collapse</h2>
+      <h3>3.1 Initial Conditions</h3>
+      <p>\[\mathrm{trth}_0 = 1,\quad \mathrm{fals}_0 = 0.\]</p>
+
+      <h3>3.2 Recurrence</h3>
+      <p>\[\boxed{\begin{aligned}
+        \mathrm{trth}_{n+1} &= \frac{\mathrm{trth}_n}{2},\\[4pt]
+        \mathrm{fals}_{n+1} &= \mathrm{fals}_n+\frac{\mathrm{trth}_n}{2}.
+      \end{aligned}}\]</p>
+
+      <h3>3.3 First Iterations</h3>
+      <table>
+        <thead><tr><th>n</th><th>\(\mathrm{trth}_n\)</th><th>\(\mathrm{fals}_n\)</th></tr></thead>
+        <tbody>
+          <tr><td>0</td><td>1</td><td>0</td></tr>
+          <tr><td>1</td><td>\(\tfrac12\)</td><td>\(\tfrac12\)</td></tr>
+          <tr><td>2</td><td>\(\tfrac14\)</td><td>\(\tfrac34\)</td></tr>
+          <tr><td>3</td><td>\(\tfrac18\)</td><td>\(\tfrac{7}{8}\)</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.4 Closed Form &amp; Convergence</h3>
+      <p>Because the recurrence on \(\mathrm{trth}_n\) is geometric,</p>
+      <p>\[\mathrm{trth}_n = \bigl(\tfrac12\bigr)^n,\qquad \mathrm{fals}_n = 1-\bigl(\tfrac12\bigr)^n.\]</p>
+      <p>Since \(0<\tfrac12<1\), \(\bigl(\tfrac12\bigr)^n\to0\). Hence</p>
+      <p>\[\lim_{n\to\infty}\mathrm{trth}_n = 0,\qquad \lim_{n\to\infty}\mathrm{fals}_n = 1.\]</p>
+      <p>An <strong>infinitely dissected “pure truth” converges to total entanglement with its opposite.</strong></p>
+
+      <h3>3.5 Mirror Recursion (Seed of Truth in Falsehood)</h3>
+      <p>Starting with \((\mathrm{trth}'_0,\mathrm{fals}'_0)=(0,1)\) and swapping the roles gives \(\mathrm{trth}'_n = 1-\bigl(\tfrac12\bigr)^n\) and \(\mathrm{fals}'_n = \bigl(\tfrac12\bigr)^n\), underscoring symmetrical duality.</p>
+    </section>
+
+    <section>
+      <h2>4&nbsp;&nbsp;Interpretation</h2>
+      <ul>
+        <li><strong>Truth as Process</strong> Truth is an ever‑refining activity, not a static binary state.</li>
+        <li><strong>Convergent Infinite Regress</strong> OFT converts the usual sceptical regress into an orderly limit.</li>
+        <li><strong>Binary Step, Continuous Spectrum</strong> Half‑splits produce gradations, aligning with fuzzy logic (Zadeh) and dialetheist positions (Priest).</li>
+        <li><strong>Heuristic Reach</strong> OFT sketches dynamics in theory revision, legal debate, and identity formation.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>5&nbsp;&nbsp;Relation to Existing Frameworks</h2>
+      <table>
+        <thead><tr><th>Neighbour Field</th><th>Connection</th><th>Distinction</th></tr></thead>
+        <tbody>
+          <tr><td>Dialectics</td><td>Shares emphasis on opposition</td><td>Dialectic seeks synthesis; OFT indefinitely divides</td></tr>
+          <tr><td>Paraconsistent / Dialetheist Logic</td><td>Admits true contradictions</td><td>OFT adds a <em>metric</em> of recursive halving</td></tr>
+          <tr><td>Fractal Epistemology</td><td>Self‑similar knowledge layers</td><td>OFT provides explicit numeric law</td></tr>
+          <tr><td>“Truth‑collapse” Discourse</td><td>Shared metaphor</td><td>OFT is structural, not sociological</td></tr>
+          <tr><td>Oppositional Search Algorithms</td><td>Name overlap</td><td>Those optimise; OFT analyses certainty</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>6&nbsp;&nbsp;Conclusion &amp; Outlook</h2>
+      <p>OFT quantitatively captures the <em>inescapable duality</em> of truth claims. Showing that perfect certainty erodes into entangled falsehood under infinite scrutiny reframes debates on objectivity, contradiction, and logical limits. Future work may:</p>
+      <ol>
+        <li>Explore alternative partition ratios \(0<r<1\).</li>
+        <li>Visualise the truth‑false field via Sierpiński‑like plots.</li>
+        <li>Apply OFT heuristics to conceptual drift in machine‑learning models or normative shifts in ethics.</li>
+      </ol>
+      <p>Absolute purity, on this view, is <strong>not abolished</strong>—simply unreachable without embracing the fractal opposition at its core.</p>
+    </section>
+
+    <section>
+      <h2>References (select)</h2>
+      <ul>
+        <li>Bateson, G. <em>Steps to an Ecology of Mind</em> (1972).</li>
+        <li>Derrida, J. <em>Of Grammatology</em> (1967).</li>
+        <li>Hegel, G.W.F. <em>Science of Logic</em> (1812–16).</li>
+        <li>Heraclitus, <em>Fragments</em> (c. 500&nbsp;BCE).</li>
+        <li>Nāgārjuna, <em>Mūlamadhyamakakārikā</em> (2nd&nbsp;century).</li>
+        <li>Priest, G. <em>In Contradiction</em> (2006).</li>
+        <li>Zadeh, L.A. “Fuzzy Sets,” <em>Information and Control</em> 8 (1965): 338–353.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>&copy; 2025 Carl Moore. All rights reserved.</p>
+    </footer>
+  </main>
+</body>
+</html>
