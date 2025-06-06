@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Gnosta - Knowledge Unleashed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00ff88;
+            --secondary: #ff0080;
+            --accent: #8000ff;
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --light: #ffffff;
+            --glow: rgba(0, 255, 136, 0.3);
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            color: var(--light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Matrix background effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.05;
+        }
+
+        .matrix-bg canvas {
+            display: block;
+        }
+
+        /* Glitch effect */
+        @keyframes glitch {
+            0% { transform: translateX(0); }
+            20% { transform: translateX(-2px); }
+            30% { transform: translateX(2px); }
+            40% { transform: translateX(-1px); }
+            50% { transform: translateX(1px); }
+            60% { transform: translateX(-2px); }
+            70% { transform: translateX(2px); }
+            80% { transform: translateX(-1px); }
+            90% { transform: translateX(1px); }
+            100% { transform: translateX(0); }
+        }
+
+        .glitch {
+            animation: glitch 0.3s infinite;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+            background-size: 300% 300%;
+            animation: gradientShift 4s ease infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--darker);
+            opacity: 0.8;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+            text-shadow: 0 0 20px var(--glow);
+            margin-bottom: 0.3rem;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, var(--primary), var(--light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .pronunciation {
+            font-size: clamp(0.8rem, 2vw, 1rem);
+            color: var(--primary);
+            opacity: 0.8;
+            font-style: italic;
+            margin-left: 1rem;
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 10px rgba(255, 0, 128, 0.5);
+        }
+
+        .tagline {
+            font-size: clamp(0.8rem, 3vw, 1.2rem);
+            opacity: 0.9;
+            font-style: italic;
+            line-height: 1.4;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 1rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--glow);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Cards as manifesto items */
+        .card-item {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(128, 0, 255, 0.1) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
+        }
+
+        .card-item.active {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2) 0%, rgba(128, 0, 255, 0.2) 100%);
+            transform: scale(1.02);
+        }
+
+        .card-title {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--glow);
+        }
+
+        .card-description {
+            font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+
+        .highlight {
+            color: var(--secondary);
+            font-weight: bold;
+            text-shadow: 0 0 5px rgba(255, 0, 128, 0.5);
+        }
+
+        /* CTA Button */
+        .cta-section {
+            text-align: center;
+            padding: 3rem 1rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .cta-button {
+            background: linear-gradient(45deg, var(--secondary), var(--accent));
+            border: none;
+            border-radius: 50px;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 0, 128, 0.4);
+            position: relative;
+            overflow: hidden;
+            font-family: 'Courier New', monospace;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, var(--accent), var(--secondary));
+            transition: left 0.3s;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 0, 128, 0.6);
+        }
+
+        /* Floating Action Button with Ripple Effect */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+            transition: all 0.3s ease;
+            z-index: 100;
+            overflow: hidden;
+        }
+
+        .fab:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.6);
+        }
+
+        /* Ripple effect for FAB */
+        .fab .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 600ms linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Pulse animation */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* Success message */
+        .success-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            z-index: 1000;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 20px var(--glow);
+        }
+
+        .success-message.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: linear-gradient(45deg, var(--dark), var(--darker));
+            border-top: 1px solid var(--primary);
+        }
+
+        .footer-text {
+            font-size: clamp(0.8rem, 2.5vw, 1rem);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .version {
+            color: var(--accent);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(128, 0, 255, 0.5);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .card-item {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+
+            .pronunciation {
+                display: block;
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Terminal cursor */
+        .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background: var(--primary);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="matrix-bg">
+        <canvas id="matrix"></canvas>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <div>
+                <h1 class="logo">GNOSTA<span class="cursor"></span></h1>
+                <span class="pronunciation">NAW-stuh</span>
+            </div>
+            <p class="subtitle">Evolving Agentic Learning Program</p>
+            <p class="tagline">Knowledge Beyond Limits</p>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h2 class="hero-title">Discover. Learn. Evolve.</h2>
+        <p class="hero-subtitle">Unlock the power of infinite knowledge with cutting-edge AI</p>
+    </section>
+
+    <div class="container">
+        <div class="card-item reveal" data-item="1">
+            <h3 class="card-title">Intelligent Learning Agent</h3>
+            <div class="card-description">
+                <p>Meet your <span class="highlight">personal AI learning companion</span> that studies how you learn best.</p>
+                <p>It analyzes your learning patterns, identifies your strengths, and discovers what truly interests you.</p>
+            </div>
+        </div>
+
+        <div class="card-item reveal" data-item="2">
+            <h3 class="card-title">Custom-Tailored Education</h3>
+            <div class="card-description">
+                <p>Experience a <span class="highlight">completely personalized curriculum</span> built exclusively for you.</p>
+                <p>Every lesson, every concept, every challenge is designed to match your unique learning style and goals.</p>
+            </div>
+        </div>
+
+        <div class="card-item reveal" data-item="3">
+            <h3 class="card-title">Real-Time Evolution</h3>
+            <div class="card-description">
+                <p>Your learning program <span class="highlight">continuously adapts and updates</span> in real-time.</p>
+                <p>Always learning the most current, relevant information while the AI refines your path to mastery.</p>
+            </div>
+        </div>
+
+        <div class="card-item reveal" data-item="4">
+            <h3 class="card-title">Graduate-Level Mastery</h3>
+            <div class="card-description">
+                <p>Achieve <span class="highlight">graduate-level expertise</span> in your chosen field within just 12 months.</p>
+                <p>Accelerated learning that compresses years of traditional education into an intensive, optimized experience.</p>
+            </div>
+        </div>
+
+        <div class="card-item reveal" data-item="5">
+            <h3 class="card-title">Knowledge Base</h3>
+            <div class="card-description">
+                <p>Access <span class="highlight">vast repositories of information</span> across every domain.</p>
+                <p>From quantum physics to ancient philosophy - all knowledge at your fingertips.</p>
+            </div>
+        </div>
+
+        <div class="card-item reveal" data-item="6">
+            <h3 class="card-title">Real-time Insights</h3>
+            <div class="card-description">
+                <p>Get <span class="highlight">live data and trending information</span> as it happens.</p>
+                <p>Stay ahead with instant access to the pulse of knowledge.</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="cta-section">
+        <button class="cta-button" onclick="launchGnosta()">
+            Launch Gnosta Experience
+        </button>
+    </section>
+
+    <button class="fab" onclick="showSurprise()" title="Surprise me!">
+        ✨
+    </button>
+
+    <footer class="footer">
+        <p class="footer-text">
+            <span class="version">v2.0.0</span> • Knowledge Unleashed
+        </p>
+        <p class="footer-text">
+            The future of learning is here.
+        </p>
+    </footer>
+
+    <div class="success-message" id="successMessage"></div>
+
+    <script>
+        // Obfuscated check for the key file. Must be the first script to run.
+        (function(){
+            var _0x9f3b1a=document.createElement('script');
+            _0x9f3b1a.src='gnosta.key';
+            _0x9f3b1a.onerror=function(){
+                document.body.innerHTML='<div style="background-color: #0a0a0a; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: \'Courier New\', monospace; color: #00ff88; font-size: clamp(1rem, 5vw, 2.5rem); text-align: center; padding: 2rem;">Thought you could just copy and paste this page, huh ;)</div>';
+            };
+            document.head.appendChild(_0x9f3b1a);
+        })();
+
+        // Matrix digital rain effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()1010101";
+        const matrixArray = matrix.split("");
+
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+
+        const drops = [];
+        for(let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00ff88';
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < drops.length; i++) {
+                const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 35);
+
+        // Haptic feedback utility
+        function hapticFeedback(pattern) {
+            if ('vibrate' in navigator) {
+                navigator.vibrate(pattern);
+            }
+        }
+
+        // Scroll reveal animation with haptic feedback
+        let currentSection = 0;
+        const sectionPositions = [];
+        
+        function reveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+
+            for(let i = 0; i < reveals.length; i++) {
+                const elementTop = reveals[i].getBoundingClientRect().top;
+
+                if(elementTop < windowHeight - elementVisible) {
+                    if (!reveals[i].classList.contains('active')) {
+                        reveals[i].classList.add('active');
+                        
+                        // Haptic feedback for new section milestone
+                        if (i !== currentSection) {
+                            hapticFeedback([30]);
+                            currentSection = i;
+                        }
+                    }
+                }
+            }
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+
+        // Scroll boundary detection with haptic feedback
+        let lastScrollTop = 0;
+        let scrollBoundaryTriggered = false;
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = document.documentElement.clientHeight;
+            
+            // Check for top boundary
+            if (scrollTop <= 0 && !scrollBoundaryTriggered) {
+                hapticFeedback([25]);
+                scrollBoundaryTriggered = true;
+                setTimeout(() => { scrollBoundaryTriggered = false; }, 300);
+            }
+            
+            // Check for bottom boundary
+            if (scrollTop + clientHeight >= scrollHeight - 5 && !scrollBoundaryTriggered) {
+                hapticFeedback([25]);
+                scrollBoundaryTriggered = true;
+                setTimeout(() => { scrollBoundaryTriggered = false; }, 300);
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+
+        // Pull-to-refresh simulation with haptic feedback
+        let startY = 0;
+        let currentY = 0;
+        let isPulling = false;
+        let refreshTriggered = false;
+        
+        document.addEventListener('touchstart', function(e) {
+            if (window.pageYOffset === 0) {
+                startY = e.touches[0].clientY;
+                isPulling = true;
+                refreshTriggered = false;
+            }
+            
+            if (e.target.classList.contains('card-item') || e.target.classList.contains('cta-button')) {
+                e.target.style.transform = 'scale(0.98)';
+            }
+        });
+        
+        document.addEventListener('touchmove', function(e) {
+            if (isPulling && window.pageYOffset === 0) {
+                currentY = e.touches[0].clientY;
+                const pullDistance = currentY - startY;
+                
+                // Trigger haptic feedback at pull threshold
+                if (pullDistance > 60 && !refreshTriggered) {
+                    hapticFeedback([50]);
+                    refreshTriggered = true;
+                }
+            }
+        });
+        
+        document.addEventListener('touchend', function(e) {
+            isPulling = false;
+            refreshTriggered = false;
+            
+            if (e.target.classList.contains('card-item') || e.target.classList.contains('cta-button')) {
+                setTimeout(() => {
+                    e.target.style.transform = '';
+                }, 100);
+            }
+        });
+
+        // Interactive card items
+        const cardItems = document.querySelectorAll('.card-item');
+        
+        cardItems.forEach(item => {
+            item.addEventListener('click', () => {
+                // Remove active class from all items
+                cardItems.forEach(i => i.classList.remove('active'));
+                // Add active class to clicked item
+                item.classList.add('active');
+                
+                // Add glitch effect temporarily
+                item.classList.add('glitch');
+                setTimeout(() => {
+                    item.classList.remove('glitch');
+                }, 300);
+
+                const title = item.querySelector('.card-title').textContent;
+                showMessage(`${title} activated! 🚀`);
+            });
+
+            // Hover effect with particles
+            item.addEventListener('mouseenter', () => {
+                createParticles(item);
+            });
+        });
+
+        // Launch main experience with spinning vibration pattern
+        function launchGnosta() {
+            const button = document.querySelector('.cta-button');
+            button.style.transform = 'scale(0.95)';
+            
+            // Spinning vibration pattern - gradual increase and decrease
+            hapticFeedback([50, 30, 70, 40, 90, 50, 110, 60, 130, 70, 110, 60, 90, 50, 70, 40, 50]);
+            
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+                showMessage('Welcome to the Gnosta universe! 🌟');
+            }, 150);
+        }
+
+        // Create ripple effect for FAB
+        function createRipple(event, element) {
+            const circle = document.createElement('span');
+            const diameter = Math.max(element.clientWidth, element.clientHeight);
+            const radius = diameter / 2;
+
+            const rect = element.getBoundingClientRect();
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - rect.left - radius}px`;
+            circle.style.top = `${event.clientY - rect.top - radius}px`;
+            circle.classList.add('ripple');
+
+            const ripple = element.querySelector('.ripple');
+            if (ripple) {
+                ripple.remove();
+            }
+
+            element.appendChild(circle);
+        }
+
+        // Show surprise animation with ripple effect
+        function showSurprise() {
+            const fab = document.querySelector('.fab');
+            
+            // Create ripple effect
+            const rect = fab.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            
+            createRipple({
+                clientX: centerX,
+                clientY: centerY
+            }, fab);
+            
+            fab.style.background = 'linear-gradient(45deg, #ff0080, #8000ff)';
+            
+            // Ripple pattern vibration - concentric waves
+            hapticFeedback([30, 20, 60, 30, 90, 40, 120, 50, 150, 60, 120, 50, 90, 40, 60, 30, 30]);
+            
+            // Create burst effect
+            for (let i = 0; i < 12; i++) {
+                createBurstParticle(fab);
+            }
+            
+            setTimeout(() => {
+                fab.style.background = 'linear-gradient(45deg, #00ff88, #8000ff)';
+                showMessage('✨ The magic of knowledge awaits! ✨');
+            }, 300);
+        }
+
+        // Add click event listener to FAB for ripple effect
+        document.querySelector('.fab').addEventListener('click', function(e) {
+            createRipple(e, this);
+        });
+
+        // Create burst particle effect
+        function createBurstParticle(element) {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '6px';
+            particle.style.height = '6px';
+            particle.style.background = '#00ff88';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '1000';
+            
+            const rect = element.getBoundingClientRect();
+            particle.style.left = (rect.left + rect.width / 2) + 'px';
+            particle.style.top = (rect.top + rect.height / 2) + 'px';
+            
+            document.body.appendChild(particle);
+            
+            const angle = (Math.PI * 2 * Math.random());
+            const velocity = 50 + Math.random() * 50;
+            const vx = Math.cos(angle) * velocity;
+            const vy = Math.sin(angle) * velocity;
+            
+            let x = 0, y = 0;
+            const animate = () => {
+                x += vx * 0.02;
+                y += vy * 0.02;
+                particle.style.transform = `translate(${x}px, ${y}px)`;
+                particle.style.opacity = Math.max(0, 1 - Math.abs(x + y) / 100);
+                
+                if (particle.style.opacity > 0) {
+                    requestAnimationFrame(animate);
+                } else {
+                    document.body.removeChild(particle);
+                }
+            };
+            animate();
+        }
+
+        // Particle system
+        function createParticles(element) {
+            const rect = element.getBoundingClientRect();
+            const particleCount = 5;
+
+            for(let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle pulse';
+                
+                const x = rect.left + Math.random() * rect.width;
+                const y = rect.top + Math.random() * rect.height;
+                
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                document.body.appendChild(particle);
+
+                // Animate particle
+                const duration = 1000 + Math.random() * 1000;
+                particle.animate([
+                    { transform: 'translateY(0px)', opacity: 1 },
+                    { transform: 'translateY(-100px)', opacity: 0 }
+                ], {
+                    duration: duration,
+                    easing: 'ease-out'
+                }).onfinish = () => {
+                    particle.remove();
+                };
+            }
+        }
+
+        // Show success message
+        function showMessage(text) {
+            const message = document.getElementById('successMessage');
+            message.textContent = text;
+            message.classList.add('show');
+            
+            setTimeout(() => {
+                message.classList.remove('show');
+            }, 2500);
+        }
+
+        // Resize canvas on window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Random glitch effect on logo
+        setInterval(() => {
+            const logo = document.querySelector('.logo');
+            if(Math.random() > 0.95) {
+                logo.classList.add('glitch');
+                setTimeout(() => {
+                    logo.classList.remove('glitch');
+                }, 100);
+            }
+        }, 2000);
+
+        // Konami code easter egg
+        let konamiCode = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if(e.keyCode === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if(konamiIndex === konamiCode.length) {
+                    // Easter egg: Matrix mode
+                    document.body.style.filter = 'hue-rotate(120deg)';
+                    showMessage('🎮 Konami Code Activated! Matrix Mode Engaged!');
+                    setTimeout(() => {
+                        document.body.style.filter = 'none';
+                    }, 3000);
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+    </script>
+</body>
+</html>
