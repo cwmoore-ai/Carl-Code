@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Update</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 2rem 1rem;
+      font-family: "Georgia", serif;
+      background: #a9bfa1;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      transition: background-color 0.3s ease;
+    }
+
+    .container {
+      background: #fdf6e3;
+      max-width: 800px;
+      width: 100%;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transform: translateY(0);
+    }
+
+    .container:hover {
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      transform: translateY(-4px);
+    }
+
+    .unauthorized {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #333;
+      margin: 4rem 0;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    h1, h2, h3 {
+      color: #333;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    h1:hover, h2:hover, h3:hover {
+      color: #5a7a52;
+      transform: translateX(5px);
+    }
+
+    h1 {
+      position: relative;
+      overflow: hidden;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #5a7a52, transparent);
+      transition: left 0.8s ease;
+    }
+
+    h1:hover::after {
+      left: 100%;
+    }
+
+    h2, h3 {
+      margin-top: 2rem;
+      position: relative;
+    }
+
+    h2::before, h3::before {
+      content: '';
+      position: absolute;
+      left: -10px;
+      top: 50%;
+      width: 0;
+      height: 2px;
+      background: #5a7a52;
+      transform: translateY(-50%);
+      transition: width 0.3s ease;
+    }
+
+    h2:hover::before, h3:hover::before {
+      width: 8px;
+    }
+
+    p, li {
+      line-height: 1.6;
+      color: #444;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    p:hover, li:hover {
+      color: #222;
+      transform: translateX(3px);
+    }
+
+    pre {
+      background-color: #ffffff;
+      padding: 1rem;
+      border-radius: 8px;
+      color: #4a4842;
+      font-family: Consolas, monospace;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      position: relative;
+      transition: all 0.4s ease;
+      border: 2px solid transparent;
+      margin: 1rem 0;
+    }
+
+    pre:hover {
+      background-color: #fafafa;
+      border-color: #5a7a52;
+      box-shadow: 0 8px 25px rgba(90, 122, 82, 0.15);
+      transform: scale(1.01);
+    }
+
+    pre code {
+      background: none !important;
+      display: block;
+      padding: 0;
+      margin: 0;
+      color: #4a4842;
+      font-size: 1.05rem;
+      font-family: Consolas, monospace;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-break: break-word;
+      transition: color 0.3s ease;
+    }
+
+    pre:hover code {
+      color: #2a2822;
+    }
+
+    button.copy-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      border: none;
+      background: #4a4842;
+      color: #fff;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+      opacity: 0.9;
+      z-index: 10;
+      min-width: 60px;
+      font-weight: 500;
+    }
+
+    button.copy-btn:hover {
+      background: #5a7a52;
+      opacity: 1;
+    }
+
+    button.copy-btn:active {
+      background: #3a4a32;
+    }
+
+    .done-btn {
+      display: block;
+      margin: 3rem auto 2rem;
+      padding: 16px 32px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border: none;
+      background: #5a7a52;
+      color: #fff;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(90, 122, 82, 0.3);
+    }
+
+    .done-btn:hover {
+      background: #4a6442;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(90, 122, 82, 0.4);
+    }
+
+    .done-btn:active {
+      transform: translateY(0);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 4rem;
+      font-size: 0.9em;
+      color: #666;
+      transition: all 0.3s ease;
+      transform: translateY(0);
+    }
+
+    footer:hover {
+      color: #5a7a52;
+      transform: translateY(-2px);
+    }
+
+    footer a {
+      color: inherit;
+      text-decoration: underline;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    footer a:hover {
+      color: #4a4842;
+      text-decoration: none;
+    }
+
+    footer a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 50%;
+      background: #5a7a52;
+      transition: all 0.3s ease;
+    }
+
+    footer a:hover::after {
+      width: 100%;
+      left: 0;
+    }
+
+    /* Particle animation styles */
+    .particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #5a7a52;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Subtle scroll animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .container > * {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .container > *:nth-child(2) { animation-delay: 0.1s; }
+    .container > *:nth-child(3) { animation-delay: 0.2s; }
+    .container > *:nth-child(4) { animation-delay: 0.3s; }
+    .container > *:nth-child(5) { animation-delay: 0.4s; }
+    .container > *:nth-child(6) { animation-delay: 0.5s; }
+    .container > *:nth-child(7) { animation-delay: 0.6s; }
+    .container > *:nth-child(8) { animation-delay: 0.7s; }
+
+    /* Responsive hover adjustments */
+    @media (max-width: 768px) {
+      .container:hover {
+        transform: translateY(-2px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="content">
+      <!-- Content will be populated by JavaScript -->
+    </div>
+    
+    <footer>
+      Carl Moore, <a href="https://gnosta.ai" target="_blank">Gnosta.ai</a>
+    </footer>
+  </div>
+
+  <script>
+    // Check for gnosta.key file
+    async function checkKeyFile() {
+      try {
+        const response = await fetch('./gnosta.key');
+        if (response.ok) {
+          // File exists, show contact update content
+          showContactContent();
+        } else {
+          // File doesn't exist, show unauthorized message
+          showUnauthorizedContent();
+        }
+      } catch (error) {
+        // File doesn't exist or can't be accessed
+        showUnauthorizedContent();
+      }
+    }
+
+    function showUnauthorizedContent() {
+      document.getElementById('content').innerHTML = `
+        <div class="unauthorized">
+          Thought you could steal this page that easily, huh :)
+        </div>
+      `;
+    }
+
+    function showContactContent() {
+      document.getElementById('content').innerHTML = `
+        <h1>Contact Information Update</h1>
+        <p>Hi, I have a new phone number and WhatsApp number:</p>
+        
+        <pre><button class="copy-btn" onclick="copyToClipboard('phone')"">Copy</button><code id="phone">(520) 330-6362</code></pre>
+        
+        <p>Also, my new email address is:</p>
+        
+        <pre><button class="copy-btn" onclick="copyToClipboard('email')">Copy</button><code id="email">carl@gnosta.ai</code></pre>
+        
+        <button class="done-btn" onclick="handleDone()">Done</button>
+      `;
+    }
+
+    function copyToClipboard(elementId) {
+      const element = document.getElementById(elementId);
+      const btn = element.parentElement.querySelector('.copy-btn');
+      const originalText = btn.textContent;
+      
+      const text = element.textContent.trim();
+      
+      navigator.clipboard.writeText(text).then(() => {
+        btn.textContent = 'Copied!';
+        btn.style.background = '#5a7a52';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '#4a4842';
+        }, 2000);
+      }).catch(err => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        btn.textContent = 'Copied!';
+        btn.style.background = '#5a7a52';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '#4a4842';
+        }, 2000);
+      });
+    }
+
+    function createParticleExplosion() {
+      const colors = ['#5a7a52', '#a9bfa1', '#4a6442', '#fdf6e3', '#333'];
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        document.body.appendChild(particle);
+        
+        const angle = (Math.PI * 2 * i) / particleCount;
+        const velocity = 200 + Math.random() * 300;
+        const life = 1000 + Math.random() * 1000;
+        
+        const animation = particle.animate([
+          {
+            transform: 'translate(-50%, -50%) scale(1)',
+            opacity: 1
+          },
+          {
+            transform: `translate(${Math.cos(angle) * velocity - 50}px, ${Math.sin(angle) * velocity - 50}px) scale(0)`,
+            opacity: 0
+          }
+        ], {
+          duration: life,
+          easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+        });
+        
+        animation.onfinish = () => {
+          particle.remove();
+        };
+      }
+    }
+
+    function createHapticFeedback() {
+      if ('vibrate' in navigator) {
+        // Celebratory rhythm: short-long-short-long-short
+        navigator.vibrate([100, 50, 200, 50, 100, 50, 200, 50, 100]);
+      }
+    }
+
+    function handleDone() {
+      createParticleExplosion();
+      createHapticFeedback();
+      
+      // Wait for animation to be visible before redirecting
+      setTimeout(() => {
+        window.location.href = 'https://cwmoore-ai.github.io/AI-Emergent-Intelligence/index.html';
+      }, 1500);
+    }
+
+    // Initialize the page
+    checkKeyFile();
+  </script>
+</body>
+</html>
