@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Wind Agent - Multi-Layer</title>
+    
+    <script src="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.umd.min.js"></script>
+    <link href="https://cdn.maptiler.com/maptiler-sdk-js/v2.0.3/maptiler-sdk.css" rel="stylesheet" />
+    <script src="https://cdn.maptiler.com/maptiler-weather/v1.1.0/maptiler-weather.umd.min.js"></script>
+
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; background: #000; overflow: hidden; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+
+        /* The Interactive Weather Pill */
+        .weather-pill {
+            position: absolute;
+            bottom: 40px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(28, 28, 30, 0.9);
+            border: 1px solid #3a3a3c;
+            border-radius: 40px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .weather-pill:active { transform: scale(0.95); }
+        
+        .pill-icon {
+            width: 24px;
+            height: 24px;
+            background: #007aff;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            color: #00ff00;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: monospace;
+            font-size: 11px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="map"></div>
+    <div class="status-indicator" id="log">System: Online</div>
+
+    <div class="weather-pill" onclick="cycleLayers()">
+        <div class="pill-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
+        </div>
+        <span id="layer-label">Mode: Wind</span>
+    </div>
+
+    <script>
+        const key = 'FE365HqOogIpu58QWBxo';
+        maptilersdk.config.apiKey = key;
+
+        let currentMode = 0; // 0: Wind, 1: Temp, 2: Rain
+        const modes = ['Wind', 'Temperature', 'Precipitation'];
+
+        // 1. Initialize Map
+        const map = new maptilersdk.Map({
+            container: 'map',
+            style: maptilersdk.MapStyle.STREETS.DARK,
+            center: [-110.0782, 34.5134],
+            zoom: 5
+        });
+
+        // 2. Define Weather Layers
+        const windLayer = new maptilerweather.WindLayer({ id: 'wind', opacity: 0.6 });
+        
+        const tempLayer = new maptilerweather.TemperatureLayer({ 
+            id: 'temp', 
+            opacity: 0.5,
+            colorramp: maptilerweather.ColorRamp.builtin.TEMPERATURE_3 
+        });
+
+        const rainLayer = new maptilerweather.PrecipitationLayer({ 
+            id: 'rain', 
+            opacity: 0.6 
+        });
+
+        map.on('load', () => {
+            // Add all layers, but only Wind is visible at start
+            map.addLayer(tempLayer);
+            map.addLayer(rainLayer);
+            map.addLayer(windLayer);
+
+            // Hide the heatmaps initially
+            map.setLayoutProperty('temp', 'visibility', 'none');
+            map.setLayoutProperty('rain', 'visibility', 'none');
+
+            // Start all animations
+            [windLayer, tempLayer, rainLayer].forEach(l => l.animateByFactor(3600));
+            
+            document.getElementById('log').innerText = "All Layers Ready";
+        });
+
+        // 3. Toggle Logic
+        function cycleLayers() {
+            currentMode = (currentMode + 1) % modes.length;
+            const modeName = modes[currentMode];
+            document.getElementById('layer-label').innerText = `Mode: ${modeName}`;
+
+            // Reset visibility
+            map.setLayoutProperty('wind', 'visibility', (modeName === 'Wind' ? 'visible' : 'none'));
+            map.setLayoutProperty('temp', 'visibility', (modeName === 'Temperature' ? 'visible' : 'none'));
+            map.setLayoutProperty('rain', 'visibility', (modeName === 'Precipitation' ? 'visible' : 'none'));
+            
+            document.getElementById('log').innerText = `Active: ${modeName}`;
+        }
+    </script>
+</body>
+</html>
